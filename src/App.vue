@@ -8,14 +8,18 @@
 
     <div class="game">
 
-      <div class="players"> teste x teste </div>
+      <div class="players"> {{ choices }} </div>
 
-      <img class="icon -rock" src="./img/rock.svg" alt="Rock (pedra)">
-      <img class="icon -paper" src="./img/paper.svg" alt="Paper (papel)">
-      <img class="icon -scissors" src="./img/scissors.svg" alt="Scissors (tesoura)">
+      <img class="icon -rock" src="./img/rock.svg" alt="Rock (pedra)" @click="selectOption(0)">
+      <img class="icon -paper" src="./img/paper.svg" alt="Paper (papel)" @click="selectOption(1)">
+      <img class="icon -scissors" src="./img/scissors.svg" alt="Scissors (tesoura)" @click="selectOption(2)">
 
       <aside class="right">
-        <p>...</p>
+        <p>{{ scoreboard.player }} X {{ scoreboard.cpu }}</p>
+        
+        <ul>
+          <li v-for="(h, index) in historic" :key="index">{{ h }}</li>
+        </ul>
       </aside>
     </div>
 
@@ -28,9 +32,126 @@
 
 <script>
 
+
 export default {
   name: 'App',
-  components: {}
+
+  components: {},
+
+  data() {
+    return {
+      player: '',
+      cpu: '',
+
+      game: [
+        {id: 0, option: 'Rock'},
+        {id: 1, option: 'Paper'},
+        {id: 2, option: 'Scissors'}
+      ],
+
+      scoreboard: {
+        player: 0,
+        cpu: 0
+      },
+
+      historic: []
+    }
+  },
+
+  computed: {
+    choices() {
+      if(!this.player){
+        return ''
+      }
+      else if (!this.cpu) {
+        return this.player
+      }
+      else{
+        return `${this.player} X ${this.cpu}`
+      }    
+    }
+  },
+
+  methods: {
+    testeClick() {
+      console.log('clicou')
+    },
+
+    selectOption(option) {
+      
+      this.player = this.game[option].option
+      this.selectcpu(Math.floor(Math.random() * 3))
+
+    },
+
+    selectcpu(option) {
+      console.log(option)
+      this.cpu = this.game[option].option
+
+      this.gameLogic()
+    },
+
+    gameLogic() {
+
+      let result = ''
+
+      if(this.player == this.cpu){
+        result = 'Draw'
+        this.scored("")
+      }
+      else if(this.player == 'Rock'){
+        if(this.cpu == 'Paper') {
+          result = 'Lose'
+          this.scored("Cpu")
+        }
+        else if(this.cpu == 'Scissors') {
+          result = 'Win'
+          this.scored("Player")
+        }
+      }
+      else if(this.player == 'Paper'){
+        if(this.cpu == 'Scissors') {
+          result = 'Lose'
+          this.scored("Cpu")
+        }
+        else if(this.cpu == 'Rock') {
+          result = 'Win'
+          this.scored("Player")
+        }
+      }
+      else if(this.player == 'Scissors'){
+        if(this.cpu == 'Rock') {
+          result = 'Lose'
+          this.scored("Cpu")
+        }
+        else if(this.cpu == 'Paper') {
+          result = 'Win'
+          this.scored("Player")
+        }
+      }
+
+      console.log(result)
+
+
+    },
+
+    scored(winner) {
+      if(winner == 'Player'){
+        this.scoreboard.player ++
+      }
+      else if(winner == 'Cpu') {
+        this.scoreboard.cpu ++
+      }
+      this.addHistoric()
+      
+    },
+
+    addHistoric() {
+      this.historic.push(this.choices)
+    }
+
+
+  }
 }
 </script>
 
@@ -41,15 +162,16 @@ body {
   background-color: #2f1a52;
 }
 
+li {
+  list-style: none;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #d1d1d1;
-  
-
-
   
 
   position: relative;
