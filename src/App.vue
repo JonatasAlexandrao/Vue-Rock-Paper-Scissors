@@ -8,7 +8,7 @@
 
     <div class="game">
 
-      <div class="players"> {{ choices }} </div>
+      <div class="players"> {{ choices }} <p>{{ result }}</p> </div>
 
       <img class="icon -rock" src="./img/rock.svg" alt="Rock (pedra)" @click="selectOption(0)">
       <img class="icon -paper" src="./img/paper.svg" alt="Paper (papel)" @click="selectOption(1)">
@@ -42,6 +42,7 @@ export default {
     return {
       player: '',
       cpu: '',
+      result: '',
 
       game: [
         {id: 0, option: 'Rock'},
@@ -61,15 +62,16 @@ export default {
   computed: {
     choices() {
       if(!this.player){
-        return ''
+        return 'teste x teste'
       }
       else if (!this.cpu) {
         return this.player
       }
       else{
+        console.log(this.result)
         return `${this.player} X ${this.cpu}`
       }    
-    }
+    },    
   },
 
   methods: {
@@ -93,54 +95,52 @@ export default {
 
     gameLogic() {
 
-      let result = ''
-
       if(this.player == this.cpu){
-        result = 'Draw'
+        /*'Draw'*/
+        this.result = 'Draw'
         this.scored("")
       }
       else if(this.player == 'Rock'){
         if(this.cpu == 'Paper') {
-          result = 'Lose'
+          /*'Lose'*/
           this.scored("Cpu")
         }
         else if(this.cpu == 'Scissors') {
-          result = 'Win'
+          /*'Win'*/
           this.scored("Player")
         }
       }
       else if(this.player == 'Paper'){
         if(this.cpu == 'Scissors') {
-          result = 'Lose'
+          /*'Lose'*/
           this.scored("Cpu")
         }
         else if(this.cpu == 'Rock') {
-          result = 'Win'
+          /*'Win'*/
           this.scored("Player")
         }
       }
       else if(this.player == 'Scissors'){
         if(this.cpu == 'Rock') {
-          result = 'Lose'
+          /*'Lose'*/
           this.scored("Cpu")
         }
         else if(this.cpu == 'Paper') {
-          result = 'Win'
+          /*'Win'*/
           this.scored("Player")
         }
       }
-
-      console.log(result)
-
 
     },
 
     scored(winner) {
       if(winner == 'Player'){
         this.scoreboard.player ++
+        this.result = 'Win'
       }
       else if(winner == 'Cpu') {
         this.scoreboard.cpu ++
+        this.result = 'Lose'
       }
       this.addHistoric()
       
@@ -148,7 +148,9 @@ export default {
 
     addHistoric() {
       this.historic.push(this.choices)
-    }
+    },
+
+    
 
 
   }
@@ -162,14 +164,22 @@ body {
   background-color: #2f1a52;
 }
 
-li {
+li, p, ul, li{
   list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+:root {
+  font-size: 62.5%; /*10px*/
 }
 
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  /*font-family: Avenir, Helvetica, Arial, sans-serif;*/
+  font-family: 'Goldman', cursive;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
   text-align: center;
   color: #d1d1d1;
   
@@ -185,63 +195,73 @@ li {
 
 .header {
   background-color: brown;
-  height: 100px;
+  height: 10rem;
   width: 100%;
 
   grid-area: header;
+}
+.header h1 {
+  font-size: 3.5rem;
 }
 
 .game {
   grid-area: game;
 
-  height: calc(100vh - 200px);
+  height: calc(100vh - 20rem);
   width: 100vw;
 
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr minmax(200px, 1fr);
+  grid-template-columns: 1fr 1fr 1fr minmax(20rem, 1fr);
   grid-template-areas: 
     "players players players right"
     "icon1 icon2 icon3 right"
   ;
 }
 
-.right {
-  background-color: rgb(78, 78, 78);
-  
-  /*height: 100%;*/
-
-  grid-area: right;
-}
 .players {
   /*position: absolute;*/
   width: 100%;
-  height: 50px;
+  height: 5rem;
   background-color: rgba(119, 136, 153, .8);
   grid-area: players;
+
+  font-size: 2.5rem;
+}
+
+.right {
+  background-color: rgb(78, 78, 78);
+  grid-area: right;
+
+  font-size: 2rem;
+
+  display: grid;
+  grid-template-rows: 5rem 1fr;
+  
+  
+}
+.right p {
+  font-size: 3.5rem;
+}
+.right ul {
+  padding-top: 2rem;
 }
 
 .icon {
-  width: 130px;
+  width: 13rem;
   /*height: 100%;*/
   cursor: pointer;
-
-  
-
 }
-
-
 
 .footer {
   background-color: brown;
-  height: 100px;
+  height: 10rem;
   width: 100%;
 
   position: fixed;
   bottom: 0;
   left: 0;
 
-  /*position: absolute;
-  bottom: 0;*/
+  font-size: 1.5rem;
 
   grid-area: footer;
 }
