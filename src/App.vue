@@ -10,9 +10,25 @@
 
       <div class="players"> {{ choices }} <p>{{ result }}</p> </div>
 
-      <img class="icon -rock" src="./img/rock.svg" alt="Rock (pedra)" @click="selectOption(0)">
-      <img class="icon -paper" src="./img/paper.svg" alt="Paper (papel)" @click="selectOption(1)">
-      <img class="icon -scissors" src="./img/scissors.svg" alt="Scissors (tesoura)" @click="selectOption(2)">
+      <img class="icon -rock" :class="classAnimateRock" 
+        src="./img/rock.svg" alt="Rock (pedra)" 
+        @click="selectOption(0)" 
+        @mouseover="animeHeartBeat('rock')" 
+        @mouseout="animeHeartBeat('rock')"
+      >
+
+      <img class="icon -paper" :class="classAnimatePaper"
+        src="./img/paper.svg" alt="Paper (papel)" 
+        @click="selectOption(1)"
+        @mouseover="animeHeartBeat('paper')" 
+        @mouseout="animeHeartBeat('paper')"
+      >
+      <img class="icon -scissors" :class="classAnimateScissors"
+        src="./img/scissors.svg" alt="Scissors (tesoura)" 
+        @click="selectOption(2)"
+        @mouseover="animeHeartBeat('scissors')" 
+        @mouseout="animeHeartBeat('scissors')"
+      >
 
       <aside class="right">
         <p>{{ scoreboard.player }} X {{ scoreboard.cpu }}</p>
@@ -43,6 +59,12 @@ export default {
       player: '',
       cpu: '',
       result: '',
+      animate: true,
+      //classAnimate: '',
+      classAnimateRock: '',
+      classAnimatePaper: '',
+      classAnimateScissors: '',
+
 
       game: [
         {id: 0, option: 'Rock'},
@@ -71,14 +93,45 @@ export default {
         console.log(this.result)
         return `${this.player} X ${this.cpu}`
       }    
-    },    
+    },
+
   },
 
   methods: {
-    testeClick() {
-      console.log('clicou')
+    animeHeartBeat(teste) {
+      /*this.classAnimate = 'animate__animated animate__heartBeat'
+      console.log(this.animate)*/
+      //this.animate = !this.animate
+
+      if(this.animate){
+
+        if(teste == 'rock')
+          this.classAnimateRock = 'animate__animated animate__heartBeat animate__infinite'
+        }
+        else{
+          this.classAnimateRock = ''
+        }
+
+        if(teste == 'paper') {
+          this.classAnimatePaper = 'animate__animated animate__heartBeat animate__infinite'
+        }
+        else{
+          this.classAnimatePaper = ''
+        }
+
+        if(teste == 'scissors'){
+          this.classAnimateScissors = 'animate__animated animate__heartBeat animate__infinite'
+        }
+        else{
+          this.classAnimateScissors = ''
+        }
+
+      this.animate = !this.animate
+
+      console.log(this.animate)
     },
 
+  
     selectOption(option) {
       
       this.player = this.game[option].option
