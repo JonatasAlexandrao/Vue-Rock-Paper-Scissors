@@ -106,21 +106,21 @@ export default {
       if(this.animate){
 
         if(teste == 'rock')
-          this.classAnimateRock = 'animate__animated animate__heartBeat animate__infinite'
+          this.classAnimateRock = 'animate__animated animate__heartBeat animate__infinite infinite'
         }
         else{
           this.classAnimateRock = ''
         }
 
         if(teste == 'paper') {
-          this.classAnimatePaper = 'animate__animated animate__heartBeat animate__infinite'
+          this.classAnimatePaper = 'animate__animated animate__heartBeat animate__infinite infinite'
         }
         else{
           this.classAnimatePaper = ''
         }
 
         if(teste == 'scissors'){
-          this.classAnimateScissors = 'animate__animated animate__heartBeat animate__infinite'
+          this.classAnimateScissors = 'animate__animated animate__heartBeat animate__infinite infinite'
         }
         else{
           this.classAnimateScissors = ''
