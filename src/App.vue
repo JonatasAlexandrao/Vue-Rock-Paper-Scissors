@@ -5,10 +5,13 @@
 
     </header>
     
+    <div class="result" :class="enableTeste" @click="enable=false" >
+      <p>{{ result }}</p>
+    </div>
 
     <div class="game">
 
-      <div class="players"> {{ choices }} <p>{{ result }}</p> </div>
+      <div class="players"> {{ choices }} </div>
 
       <img class="icon -rock" :class="classAnimateRock" 
         src="./img/rock.svg" alt="Rock (pedra)" 
@@ -64,6 +67,7 @@ export default {
       classAnimateRock: '',
       classAnimatePaper: '',
       classAnimateScissors: '',
+      enable: false,
 
 
       game: [
@@ -94,41 +98,44 @@ export default {
         return `${this.player} X ${this.cpu}`
       }    
     },
+    enableTeste() {
+      if(this.enable){
+        return 'enable animate__animated animate__fadeIn'
+      }
+      else {
+        return ''
+      }
+    }
 
   },
 
   methods: {
     animeHeartBeat(teste) {
-      /*this.classAnimate = 'animate__animated animate__heartBeat'
-      console.log(this.animate)*/
-      //this.animate = !this.animate
 
       if(this.animate){
 
-        if(teste == 'rock')
+        if(this.classAnimateRock == '' && teste == 'rock') {
           this.classAnimateRock = 'animate__animated animate__heartBeat animate__infinite infinite'
-        }
+        }          
         else{
           this.classAnimateRock = ''
         }
 
-        if(teste == 'paper') {
+        if(this.classAnimatePaper == '' && teste == 'paper') {
           this.classAnimatePaper = 'animate__animated animate__heartBeat animate__infinite infinite'
-        }
+        }          
         else{
           this.classAnimatePaper = ''
         }
 
-        if(teste == 'scissors'){
+        if(this.classAnimateScissors == '' && teste == 'scissors') {
           this.classAnimateScissors = 'animate__animated animate__heartBeat animate__infinite infinite'
-        }
+        }          
         else{
           this.classAnimateScissors = ''
         }
-
-      this.animate = !this.animate
-
-      console.log(this.animate)
+      
+      }
     },
 
   
@@ -137,6 +144,8 @@ export default {
       this.player = this.game[option].option
       this.selectcpu(Math.floor(Math.random() * 3))
 
+      
+
     },
 
     selectcpu(option) {
@@ -144,6 +153,7 @@ export default {
       this.cpu = this.game[option].option
 
       this.gameLogic()
+      
     },
 
     gameLogic() {
@@ -182,8 +192,9 @@ export default {
           /*'Win'*/
           this.scored("Player")
         }
+        
       }
-
+      this.enable = true
     },
 
     scored(winner) {
@@ -201,9 +212,7 @@ export default {
 
     addHistoric() {
       this.historic.push(this.choices)
-    },
-
-    
+    },  
 
 
   }
@@ -244,6 +253,34 @@ li, p, ul, li{
   "game game game game"
   "footer footer footer footer"
   ;
+}
+
+.result { 
+
+  display: none;
+  position: absolute;
+  width: 100vw;
+  height: 100%;
+
+  font-size: 10rem;
+  background-color: rgba(0, 0, 0, .6);
+  z-index: 1;
+  
+}
+.result p {
+  
+  position: fixed;
+  width: 100%;
+  left: 50%;
+  top: 40%;
+  transform: translateX(-50%) translateY(-50%);
+
+  background-color: rgba(255, 255, 255, .1);
+  user-select: none;
+
+}
+.result.enable {
+  display: block;
 }
 
 .header {
@@ -291,9 +328,6 @@ li, p, ul, li{
   grid-template-rows: 5rem 1fr;
   
   
-}
-.right p {
-  font-size: 3.5rem;
 }
 .right ul {
   padding-top: 2rem;
