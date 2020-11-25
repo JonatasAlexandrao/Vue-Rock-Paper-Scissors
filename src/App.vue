@@ -13,25 +13,29 @@
 
       <div class="players"> {{ choices }} </div>
 
-      <img class="icon -rock" :class="classAnimateRock" 
-        src="./img/rock.svg" alt="Rock (pedra)" 
-        @click="selectOption(0)" 
-        @mouseover="animeHeartBeat('rock')" 
-        @mouseout="animeHeartBeat('rock')"
-      >
+      <div class="icons">
+        <div>
+          <img class="icon -rock" :class="classAnimateRock" 
+            src="./img/rock.svg" alt="Rock (pedra)" 
+            @click="selectOption(0)" 
+            @mouseover="animeHeartBeat('rock')" 
+            @mouseout="animeHeartBeat('rock')"
+          >
 
-      <img class="icon -paper" :class="classAnimatePaper"
-        src="./img/paper.svg" alt="Paper (papel)" 
-        @click="selectOption(1)"
-        @mouseover="animeHeartBeat('paper')" 
-        @mouseout="animeHeartBeat('paper')"
-      >
-      <img class="icon -scissors" :class="classAnimateScissors"
-        src="./img/scissors.svg" alt="Scissors (tesoura)" 
-        @click="selectOption(2)"
-        @mouseover="animeHeartBeat('scissors')" 
-        @mouseout="animeHeartBeat('scissors')"
-      >
+          <img class="icon -paper" :class="classAnimatePaper"
+            src="./img/paper.svg" alt="Paper (papel)" 
+            @click="selectOption(1)"
+            @mouseover="animeHeartBeat('paper')" 
+            @mouseout="animeHeartBeat('paper')"
+          >
+          <img class="icon -scissors" :class="classAnimateScissors"
+            src="./img/scissors.svg" alt="Scissors (tesoura)" 
+            @click="selectOption(2)"
+            @mouseover="animeHeartBeat('scissors')" 
+            @mouseout="animeHeartBeat('scissors')"
+          >
+        </div>
+      </div>
 
       <aside class="right">
         <p>{{ scoreboard.player }} X {{ scoreboard.cpu }}</p>
@@ -223,13 +227,16 @@ export default {
 
 body {
   margin: 0;
-  background-color: #2f1a52;
+  background-color: #2d3047;
 }
 
 li, p, ul, li{
   list-style: none;
   padding: 0;
   margin: 0;
+}
+a {
+  color:cornsilk;
 }
 
 :root {
@@ -284,7 +291,7 @@ li, p, ul, li{
 }
 
 .header {
-  background-color: brown;
+  background-color: #64113f;
   height: 10rem;
   width: 100%;
 
@@ -304,43 +311,63 @@ li, p, ul, li{
   grid-template-columns: 1fr 1fr 1fr minmax(20rem, 1fr);
   grid-template-areas: 
     "players players players right"
-    "icon1 icon2 icon3 right"
+    "icon icon icon right"
   ;
+}
+
+.icons {
+  position: relative;
+  grid-area: icon;
+  height: calc(100vh - 20rem);
+}
+.icons > div {
+  /*background-color: aqua;*/
+  position: absolute;
+  transform: translateX(-50%) translateY(-50%);
+  left: 50%;
+  top: 50%;
+  width: 100%;
 }
 
 .players {
   /*position: absolute;*/
   width: 100%;
   height: 5rem;
-  background-color: rgba(119, 136, 153, .8);
+  background-color: #f7cacd;
+  color: #022b3a;
   grid-area: players;
 
-  font-size: 2.5rem;
+  font-size: 3rem;
 }
 
 .right {
-  background-color: rgb(78, 78, 78);
+  background-color: #022b3a;
+  color: #f7cacd;
   grid-area: right;
 
   font-size: 2rem;
 
   display: grid;
   grid-template-rows: 5rem 1fr;
-  
+  user-select: none;
   
 }
 .right ul {
   padding-top: 2rem;
 }
+.right p {
+  font-size: 4rem;
+}
 
 .icon {
   width: 13rem;
+  padding: 0 10px;
   /*height: 100%;*/
   cursor: pointer;
 }
 
 .footer {
-  background-color: brown;
+  background-color: #64113f;
   height: 10rem;
   width: 100%;
 
